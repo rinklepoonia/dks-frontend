@@ -19,7 +19,7 @@ const imgImage572 = "https://www.figma.com/api/mcp/asset/08b59e6b-328c-4636-b182
 
 const Hero = () => {
   return (
-    <section className="relative w-full min-h-[600px] md:min-h-[700px] lg:h-[800px] bg-light-white overflow-hidden py-12 md:py-16 lg:py-0">
+    <section className=" w-full min-h-[600px] md:min-h-[700px] lg:h-[800px] bg-light-white overflow-hidden py-12 md:py-16 lg:py-0">
       <div className="max-w-[1320px] px-5 mx-auto h-full relative">
         {/* Background Pattern */}
         {/* <div className="absolute inset-0 opacity-10 pointer-events-none -z-10">
