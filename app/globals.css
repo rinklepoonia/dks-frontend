@@ -24,15 +24,15 @@
   --text-custom-3xl: 32px;
   --text-custom-4xl: 40px;
   --shadow-light-black: 0px 4px 25px 0px #0101011a;
-  
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 10s linear infinite;
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
+
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }

@@ -17,14 +17,14 @@ const logos = [
 
 const Trusted = () => {
   return (
-    <section className="w-full py-12 md:py-16 bg-light-white overflow-hidden">
+    <section className="w-full py-12 md:py-16  overflow-hidden max-w-[1320px] px-5 mx-auto">
       <div className="max-w-[1320px] px-5 mx-auto">
         <p className="text-light-grey text-xl font-semibold italic text-center mb-8">
           Trusted Our Service
         </p>
 
         {/* Marquee Container */}
-        <div className="relative">
+        <div className="relative flex">
           <div className="flex animate-marquee">
             {/* First set of logos */}
             {logos.map((logo, index) => (
@@ -41,10 +41,13 @@ const Trusted = () => {
                 />
               </div>
             ))}
-            {/* Duplicate set for seamless loop */}
+          
+          </div>
+          <div className="flex animate-marquee">
+            {/* First set of logos */}
             {logos.map((logo, index) => (
               <div
-                key={`logo-2-${index}`}
+                key={`logo-1-${index}`}
                 className="flex items-center justify-center min-w-[180px] h-[80px] opacity-90"
               >
                 <Image
@@ -56,6 +59,7 @@ const Trusted = () => {
                 />
               </div>
             ))}
+
           </div>
         </div>
       </div>
