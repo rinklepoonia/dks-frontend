@@ -7,3 +7,4 @@ export const navgationDataGet =  async() => {
          url : API_URLS.GLOBAL +'?populate=header.navLinks&populate=header.logo&populate=header.navCta',
      })
 }
+
