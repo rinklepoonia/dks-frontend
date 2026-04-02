@@ -7,4 +7,22 @@ export const navgationDataGet =  async() => {
          url : API_URLS.GLOBAL +'?populate=header.navLinks&populate=header.logo&populate=header.navCta',
      })
 }
+export const homeHeroData = async() => {
+    return await handleApiRequest ({
+        method:GET_METHOD ,
+        url : API_URLS.LANDING_PAGE + '?populate=hero&populate=hero.cta&populate=hero.review&populate=hero.review.icon',
+    })
+}
+export const homeTrustedData = async() => {
+    return await handleApiRequest({
+        method:GET_METHOD ,
+        url : API_URLS.LANDING_PAGE + '?populate=trusted&populate=trusted.logos',
+    })
+}
+export const loveByData = async() => {
+    return await handleApiRequest({
+         method:GET_METHOD ,
+        url : API_URLS.LANDING_PAGE + '?populate=loveBy&populate=loveBy.testimonials&populate=loveBy.testimonials.profileImage&populate=loveBy.testimonials.rating&populate=loveBy.testimonials.socialIcon' 
+    })
+}
 
