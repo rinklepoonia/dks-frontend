@@ -1,6 +1,6 @@
+import { homeHeroData } from '@/app/utils/api/apiList'
+import { getSiteUrl } from '@/app/utils/commonFun'
 import Image from 'next/image'
-import { homeHeroData } from '../utils/api/apiList'
-import { getSiteUrl } from '../utils/commonFun'
 
 // Image assets from Figma
 const imgHeroSection = "https://www.figma.com/api/mcp/asset/118f494c-864d-4fcd-967d-76a1e305a791"

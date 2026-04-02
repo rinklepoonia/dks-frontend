@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import Heading from "./common/Heading";
-import Paragraph from "./common/Paragraph";
-import Icons from "./common/Icons";
+import Heading from "../common/Heading";
+import Paragraph from "../common/Paragraph";
+import Icons from "../common/Icons";
 import Image from "next/image";
 import "swiper/css";
 import { SwiperSlide, Swiper } from "swiper/react";
-import { getSiteUrl } from "../utils/commonFun";
+import { getSiteUrl } from "@/app/utils/commonFun";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface loveByProps {
   loveBy: {
@@ -17,13 +17,13 @@ interface loveByProps {
       author: string;
       role: string;
       profileImage: {
-        url:string
+        url: string;
       };
       rating: {
-        url:string
+        url: string;
       };
       socialIcon: {
-        url:string
+        url: string;
       };
     }[];
   };
@@ -84,7 +84,12 @@ const LovedBySingapore = ({
                   src={getSiteUrl(obj.socialIcon.url)}
                   alt="social-icon"
                 />
-                <Image width={116} height={20} src={getSiteUrl(obj.rating.url)} alt="rating" />
+                <Image
+                  width={116}
+                  height={20}
+                  src={getSiteUrl(obj.rating.url)}
+                  alt="rating"
+                />
               </div>
             </SwiperSlide>
           ))}
