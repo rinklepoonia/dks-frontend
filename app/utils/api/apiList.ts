@@ -31,6 +31,6 @@ export const getBlogs = async() => {
          method:GET_METHOD ,
             // Strapi sorting by publish date in ascending order (oldest first)
             // Adjust field name (publishedAt/createdAt) according to your CMS schema
-            url : API_URLS.BLOG_PAGE + '?populate=thumbnail&sort=publishedAt:desc'
+            url : API_URLS.BLOG_PAGE + '?populate=thumbnail&sort=publishedAt:desc&populate=blogDetails&populate=blogDetails.image'
     })
 }
