@@ -26,3 +26,11 @@ export const loveByData = async() => {
     })
 }
 
+export const getBlogs = async() => {
+    return await handleApiRequest ({
+         method:GET_METHOD ,
+            // Strapi sorting by publish date in ascending order (oldest first)
+            // Adjust field name (publishedAt/createdAt) according to your CMS schema
+            url : API_URLS.BLOG_PAGE + '?populate=thumbnail&sort=publishedAt:desc'
+    })
+}
