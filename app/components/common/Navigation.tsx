@@ -35,7 +35,7 @@ const Navigation =  ({navbarDetails}:{navbarDetails:NavLink}) => {
   return (
     <div className="overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-5 py-5 flex md:items-center justify-between w-full">
-        <Link href="#">
+        <Link href="/">
           <Image
             loading="eager"
             width="193"
