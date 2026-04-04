@@ -1,5 +1,5 @@
 import { API_URLS } from "./apiUrls"
-import { GET_METHOD, handleApiRequest, POST_METHOD } from "./fetchResponse"
+import { GET_METHOD, handleApiRequest, POST_METHOD, PUT_METHOD } from "./fetchResponse"
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const navgationDataGet =  async() => {
      return await handleApiRequest ({
@@ -42,8 +42,15 @@ export const getContactData = async() => {
 }
 export const getContactFormData = async(data:any) => {
     return await handleApiRequest ({
-         method:POST_METHOD ,
+         method:POST_METHOD  ,
             url : API_URLS.CONTACT_fORM_DATA ,
+            data
+    })
+}
+export const getContactFormDataUpdate = async(data:any , id:string) => {
+    return await handleApiRequest ({
+            method:PUT_METHOD  ,
+            url : API_URLS.CONTACT_fORM_DATA + `/${id}`,
             data
     })
 }
