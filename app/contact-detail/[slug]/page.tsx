@@ -6,13 +6,12 @@ import React from 'react'
 
 const page = async ({params} :{params:{slug:string}}) => {
   const {slug} = await params
-  const  detail = await getContactFormData()
+  const  detail = await getContactFormData(slug)
    const singleDetail = detail.data
-  const detailsingle = singleDetail.find((obj:singleDetail) => slugify(obj.documentId) === slug)
-
+ 
   return (
     <div>
-      <SingleContactDetail detailsingle={detailsingle}/>
+      <SingleContactDetail detailsingle={singleDetail}/>
     </div>
   )
 }

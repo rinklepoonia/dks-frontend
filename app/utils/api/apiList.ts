@@ -54,10 +54,10 @@ export const getContactStaticData = async() => {
             
     })
 }
-export const getContactFormData = async() => {
+export const getContactFormData = async(documentId?:string) => {
     return await handleApiRequest ({
              method:GET_METHOD  ,
-            url : API_URLS.CONTACT_fORM_DATA ,
+            url : API_URLS.CONTACT_fORM_DATA +( documentId ?`/${documentId}`:''),
             
     })
 }

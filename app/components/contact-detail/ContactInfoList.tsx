@@ -105,7 +105,7 @@ const ContactInfoList = async() => {
                       {row.message}
                     </td>
                    <td className="py-4 px-6">
-                     <Link href={`/contact-detail/${slugify(row.documentId)}`} className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-2 px-6 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] transition-all ease-linear duration-300">EDIT</Link>
+                     <Link href={`/contact-detail/${row.documentId}`} className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-2 px-6 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] transition-all ease-linear duration-300">EDIT</Link>
                    </td>
                   </tr>
                 ))}
