@@ -11,7 +11,7 @@ const SingleContactDetail = ({
 }: {
   detailsingle: singleDetail;
 }) => {
-  // const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: detailsingle.name || "",
     email: detailsingle.email || "",
@@ -27,6 +27,7 @@ const SingleContactDetail = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await postFormDataUpdate(
         { data: { ...formData } },
@@ -35,6 +36,8 @@ const SingleContactDetail = ({
       alert("Updated successfully!");
     } catch (error: any) {
       alert(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -114,10 +117,18 @@ const SingleContactDetail = ({
               />
             </div>
             <button
+              disabled={isLoading}
               type="submit"
-              className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-3 px-8 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] shadow-sm transition-all ease-linear duration-300"
+              className={`font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-3 px-8 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] shadow-sm transition-all ease-linear duration-300 text-center flex items-center justify-center ${isLoading && "opacity-30"}`}
             >
-              Save
+              {isLoading ? (
+                <span className="flex items-center gap-2 text-center">
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-center"></span>
+                  Saving...
+                </span>
+              ) : (
+                "Save"
+              )}
             </button>
           </form>
 
