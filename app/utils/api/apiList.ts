@@ -40,14 +40,28 @@ export const getContactData = async() => {
             url : API_URLS.CONTACT_PAGE +'?populate=hourofOperation&populate=hourofOperation.infoList'
     })
 }
-export const getContactFormData = async(data:any) => {
+export const postContactFormData = async(data:any) => {
     return await handleApiRequest ({
          method:POST_METHOD  ,
             url : API_URLS.CONTACT_fORM_DATA ,
             data
     })
 }
-export const getContactFormDataUpdate = async(data:any , id:string) => {
+export const getContactStaticData = async() => {
+    return await handleApiRequest ({
+             method:GET_METHOD  ,
+            url : API_URLS.CONTACT_DETAIL_STATIC_DATA ,
+            
+    })
+}
+export const getContactFormData = async() => {
+    return await handleApiRequest ({
+             method:GET_METHOD  ,
+            url : API_URLS.CONTACT_fORM_DATA ,
+            
+    })
+}
+export const postContactFormDataUpdate = async(data:any , id:string) => {
     return await handleApiRequest ({
             method:PUT_METHOD  ,
             url : API_URLS.CONTACT_fORM_DATA + `/${id}`,

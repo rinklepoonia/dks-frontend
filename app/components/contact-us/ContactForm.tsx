@@ -4,7 +4,7 @@ import Input from "../common/Input";
 import Textarea from "../common/Textarea";
 import Link from "next/link";
 import { contactProps } from "@/app/utils/type";
-import { getContactFormData } from "@/app/utils/api/apiList";
+import { postContactFormData } from "@/app/utils/api/apiList";
 
 const ContactForm = ({
   contactHourDetail,
@@ -59,12 +59,12 @@ const ContactForm = ({
     if (!valid) return;
 
     try {
-      await getContactFormData({ data: formData });
+      await postContactFormData({ data: formData });
       alert("Form submitted successfully!");
       setFormData({ name: "", email: "", phoneNumber: "", message: "" });
     } catch (error) {
       alert("Something went wrong!");
-    } 
+    }
 
     console.log("Form Data:", formData);
   };

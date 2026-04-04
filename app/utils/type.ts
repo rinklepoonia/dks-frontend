@@ -20,5 +20,6 @@ export interface contactProps {
     title:string,
     value:string,
     url:string
-  }[]
+  }[],
+  
 }

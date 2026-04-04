@@ -1,43 +1,57 @@
+import { getContactFormData, getContactStaticData } from "@/app/utils/api/apiList";
 import React from "react";
 
-const mockContactData = [
-  {
-    id: 3,
-    name: "Rinkle Poonia",
-    email: "rinklepoonia889@gmail.com",
-    phoneNumber: "3,333,333,333",
-    message: "-",
-    createdAt: "Saturday, April 4, 2026 at 10:49 AM",
-  },
-  {
-    id: 1,
-    name: "dsad",
-    email: "asd@gmail.com",
-    phoneNumber: "1,234,567,898",
-    message: "ds",
-    createdAt: "Saturday, April 4, 2026 at 10:05 AM",
-  },
-  {
-    id: 5,
-    name: "radha",
-    email: "rinklepoonia889@gmail.com",
-    phoneNumber: "2,222,222,222",
-    message: "-",
-    createdAt: "Saturday, April 4, 2026 at 11:52 AM",
-  },
-];
+// const mockContactData = [
+//   {
+//     id: 3,
+//     name: "Rinkle Poonia",
+//     email: "rinklepoonia889@gmail.com",
+//     phoneNumber: "3,333,333,333",
+//     message: "-",
+//     createdAt: "Saturday, April 4, 2026 at 10:49 AM",
+//   },
+//   {
+//     id: 1,
+//     name: "dsad",
+//     email: "asd@gmail.com",
+//     phoneNumber: "1,234,567,898",
+//     message: "ds",
+//     createdAt: "Saturday, April 4, 2026 at 10:05 AM",
+//   },
+//   {
+//     id: 5,
+//     name: "radha",
+//     email: "rinklepoonia889@gmail.com",
+//     phoneNumber: "2,222,222,222",
+//     message: "-",
+//     createdAt: "Saturday, April 4, 2026 at 11:52 AM",
+//   },
+// ];
 
-const ContactInfo = () => {
+ 
+interface detailListProps{
+  id: number;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  message: string;
+  createdAt: string;
+}
+const ContactInfo = async() => {
+    const formList =  await getContactFormData();
+     const detailFormList = formList.data
+    const staticData =  await getContactStaticData();
+    const  allStaticData = staticData.data
   return (
     <section className="bg-[#F4F5F0] py-16 min-h-screen">
       <div className="max-w-[1360px] px-5 mx-auto">
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold text-[#61A146] mb-2">
-              Contact Submissions
+             {allStaticData.title}
             </h2>
             <p className="text-gray-600">
-              View all inquiries and messages from the contact form.
+              {allStaticData.description}
             </p>
           </div>
         </div>
@@ -68,7 +82,7 @@ const ContactInfo = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {mockContactData.map((row) => (
+                {detailFormList?.map((row:detailListProps) => (
                   <tr
                     key={row.id}
                     className="hover:bg-[#F4F5F0]/50 transition-colors group"
@@ -93,7 +107,7 @@ const ContactInfo = () => {
             </table>
           </div>
           
-          {mockContactData.length === 0 && (
+          {detailFormList?.length === 0 && (
             <div className="p-8 text-center text-gray-500">
               No contact submissions found.
             </div>

@@ -4,4 +4,5 @@ export const API_URLS =    {
         BLOG_PAGE :"/blogs",
         CONTACT_PAGE : "/contact-us/",
         CONTACT_fORM_DATA : "/contacts/",
+        CONTACT_DETAIL_STATIC_DATA : "/contact-detail-list/",
     }
