@@ -178,15 +178,16 @@ const ContactForm = ({
                   >
                     Send
                   </button>
-                  <button
+                
+                </div>
+              </form>
+                <button
                     type="button"
-                    className="w-full bg-[#F4F5F0] border border-[#61A146] text-[#61A146] hover:bg-[#eff1ea] font-medium flex items-center justify-center gap-2 py-[14px] px-6 rounded-full transition-colors shadow-sm"
+                    className="cursor-pointer w-full mt-3 bg-[#F4F5F0] border border-[#61A146] text-[#61A146] hover:bg-[#eff1ea] font-medium flex items-center justify-center gap-2 py-[14px] px-6 rounded-full transition-colors shadow-sm"
                   >
                     <WhatsappIcon />
                     Start a WhatsApp Chat
                   </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
