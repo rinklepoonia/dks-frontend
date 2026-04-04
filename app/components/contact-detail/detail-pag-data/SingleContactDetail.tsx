@@ -5,12 +5,13 @@ import { singleDetail } from "@/app/utils/type";
 import Input from "../../common/Input";
 import Textarea from "../../common/Textarea";
 import { postFormDataUpdate } from "@/app/utils/api/apiList";
-
+import { toast } from 'react-toastify';
 const SingleContactDetail = ({
   detailsingle,
 }: {
   detailsingle: singleDetail;
 }) => {
+  //  const notify = () => toast("Wow so easy!");
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: detailsingle.name || "",
@@ -33,9 +34,9 @@ const SingleContactDetail = ({
         { data: { ...formData } },
         detailsingle.documentId,
       );
-      alert("Updated successfully!");
+      toast.success("Updated successfully!");
     } catch (error: any) {
-      alert(error.message);
+      toast.error(error.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
     }
@@ -116,7 +117,7 @@ const SingleContactDetail = ({
                 placeholder="Message..."
               />
             </div>
-            <button
+            <button 
               disabled={isLoading}
               type="submit"
               className={`font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-3 px-8 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] shadow-sm transition-all ease-linear duration-300 text-center flex items-center justify-center ${isLoading && "opacity-30"}`}
