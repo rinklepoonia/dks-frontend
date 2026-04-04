@@ -1,5 +1,6 @@
 import { getContactFormData, getContactStaticData } from "@/app/utils/api/apiList";
 import React from "react";
+import Button from "../common/Button";
 
 // const mockContactData = [
 //   {
@@ -37,7 +38,7 @@ interface detailListProps{
   message: string;
   createdAt: string;
 }
-const ContactInfo = async() => {
+const ContactInfoList = async() => {
     const formList =  await getContactFormData();
      const detailFormList = formList.data
     const staticData =  await getContactStaticData();
@@ -77,7 +78,7 @@ const ContactInfo = async() => {
                     MESSAGE
                   </th>
                   <th className="py-4 px-6 font-semibold text-[#61A146] text-sm uppercase tracking-wider">
-                    CREATEDAT
+                   EDIT OPTION
                   </th>
                 </tr>
               </thead>
@@ -100,7 +101,9 @@ const ContactInfo = async() => {
                     <td className="py-4 px-6 text-gray-600 max-w-[200px] truncate group-hover:whitespace-normal group-hover:break-words transition-all">
                       {row.message}
                     </td>
-                    <td className="py-4 px-6 text-gray-600">{row.createdAt}</td>
+                   <td className="py-4 px-6">
+                     <button className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-2 px-6 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] transition-all ease-linear duration-300">EDIT</button>
+                   </td>
                   </tr>
                 ))}
               </tbody>
@@ -118,4 +121,4 @@ const ContactInfo = async() => {
   );
 };
 
-export default ContactInfo;
+export default ContactInfoList;
