@@ -34,3 +34,11 @@ export const getBlogs = async() => {
             url : API_URLS.BLOG_PAGE + '?populate=thumbnail&sort=publishedAt:desc&populate=blogDetails&populate=blogDetails.image'
     })
 }
+export const getContactData = async() => {
+    return await handleApiRequest ({
+         method:GET_METHOD ,
+            // Strapi sorting by publish date in ascending order (oldest first)
+            // Adjust field name (publishedAt/createdAt) according to your CMS schema
+            url : API_URLS.CONTACT_PAGE +'?populate=hourofOperation&populate=hourofOperation.infoList'
+    })
+}

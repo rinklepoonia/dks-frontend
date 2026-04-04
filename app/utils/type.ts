@@ -13,5 +13,12 @@ export interface blogsProp{
   },
   detail:string[]
   }[]
- 
+}
+export interface contactProps {
+  title:string,
+  infoList :{
+    title:string,
+    value:string,
+    url:string
+  }[]
 }

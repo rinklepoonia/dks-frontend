@@ -1,42 +1,56 @@
-'use client'
-import React, { useState } from 'react';
-import Input from '../common/Input';
-import Textarea from '../common/Textarea';
+"use client";
+import React, { useState } from "react";
+import Input from "../common/Input";
+import Textarea from "../common/Textarea";
+import Link from "next/link";
+import { contactProps } from "@/app/utils/type";
 
-const ContactForm = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
-  const [errors, setErrors] = useState({ name: '', email: '', phone: '' });
+const ContactForm = ({
+  contactHourDetail,
+}: {
+  contactHourDetail: contactProps;
+}) => {
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [errors, setErrors] = useState({ name: "", email: "", phone: "" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user starts typing again
     if (errors[name as keyof typeof errors]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
-    const newErrors = { name: '', email: '', phone: ''};
+    const newErrors = { name: "", email: "", phone: "" };
 
-    if (!formData.name.trim()) { newErrors.name = 'Name is required'; valid = false; }
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+      valid = false;
+    }
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'; valid = false;
+      newErrors.email = "Email is required";
+      valid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is Invalid'; valid = false;
+      newErrors.email = "Email is Invalid";
+      valid = false;
     }
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone is required'; valid = false;
+      newErrors.phone = "Phone is required";
+      valid = false;
     }
-    
+
     setErrors(newErrors);
-    
+
     if (valid) {
-      console.log('Form submitted successfully:', formData);
+      console.log("Form submitted successfully:", formData);
       alert("Form submitted successfully!");
-      setFormData({ name: '', email: '', phone: '' });
+      setFormData({ name: "", email: "", phone: "" });
     }
   };
 
@@ -44,10 +58,8 @@ const ContactForm = () => {
     <section className="bg-[#F4F5F0] py-16">
       <div className="max-w-[1360px] px-5 mx-auto">
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-stretch">
-
           {/* Info Card */}
           <div className="bg-[#F4F5F0] border border-[#61A146] rounded-2xl p-6 lg:p-8 flex flex-col h-full">
-            {/* Map Placeholder */}
             <div className="w-full h-[250px] sm:h-[300px] xl:h-[350px] mb-8 rounded-xl overflow-hidden shadow-sm bg-gray-200">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15954.912!2d103.882!3d1.353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da177e77b47b85%3A0xe104db8!2sDefu%20Industrial%20Estate!5e0!3m2!1sen!2ssg!4v1700000000000!5m2!1sen!2ssg"
@@ -59,37 +71,40 @@ const ContactForm = () => {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
+            <h2 className="text-3xl font-bold text-[#61A146] mb-6">
+             {contactHourDetail.title}
+            </h2>
 
-            <h2 className="text-3xl font-bold text-[#61A146] mb-6">Hour of Operation</h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div className="flex flex-col gap-6">
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Monday to Friday</h3>
-                  <p className="text-gray-500 mt-1">9am to 6pm</p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Saturday</h3>
-                  <p className="text-gray-500 mt-1">9am to 6pm</p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Sunday & P/H</h3>
-                  <p className="text-gray-500 mt-1">Closed</p>
-                </div>
+            <div className="flex max-sm:flex-wrap gap-4 justify-between">
+              <div className="space-y-6  gap-6">
+                {contactHourDetail?.infoList?.slice(0, 3).map((obj, i:number) => (
+                  <div key={i}>
+                    <h3 className="text-lg font-medium text-gray-800">
+                      {obj.title}
+                    </h3>
+                    <p className="text-gray-500 mt-1 max-w-[244px]">
+                      {obj.value}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-col gap-6">
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Location</h3>
-                  <p className="text-gray-500 mt-1 leading-relaxed">
-                    Defu Industrial Estate<br />
-                    Address: 37 Defu Lane 10,<br />
-                    #01/41, Singapore 539214
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Contact us</h3>
-                  <p className="text-gray-500 mt-1">62844186</p>
-                </div>
+              <div className="space-y-6  gap-6">
+                {contactHourDetail?.infoList?.slice(3, 5).map((obj, i:number) => (
+                  <div key={i} className="max-w-[244px]">
+                    <h3 className="text-lg font-medium text-gray-800">
+                      {obj.title}
+                    </h3>
+                    {obj.url && (
+                      <Link
+                        target="_blank"
+                        href={obj.url}
+                        className="text-gray-500 mt-1 max-w-[244px]"
+                      >
+                        {obj.value}
+                      </Link>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -97,33 +112,76 @@ const ContactForm = () => {
           {/* Form Card */}
           <div className="bg-[#F4F5F0] border border-[#61A146] rounded-2xl p-6 lg:p-8 flex flex-col justify-between h-full">
             <div>
-              <h2 className="text-4xl font-bold text-[#61A146] mb-2">Contact Us</h2>
-              <p className="text-gray-600 mb-8">Fastest way to get your quote send us photos directly.</p>
+              <h2 className="text-4xl font-bold text-[#61A146] mb-2">
+                Contact Us
+              </h2>
+              <p className="text-gray-600 mb-8">
+                Fastest way to get your quote send us photos directly.
+              </p>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <Input name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
-                    {errors.name && <span className="text-red-500 text-sm mt-1 ml-1">{errors.name}</span>}
+                    <Input
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Name"
+                    />
+                    {errors.name && (
+                      <span className="text-red-500 text-sm mt-1 ml-1">
+                        {errors.name}
+                      </span>
+                    )}
                   </div>
                   <div className="flex flex-col">
-                    <Input name="email" value={formData.email} onChange={handleChange} placeholder="Email" type="email" />
-                    {errors.email && <span className="text-red-500 text-sm mt-1 ml-1">{errors.email}</span>}
+                    <Input
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      type="email"
+                    />
+                    {errors.email && (
+                      <span className="text-red-500 text-sm mt-1 ml-1">
+                        {errors.email}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" type="tel" />
-                  {errors.phone && <span className="text-red-500 text-sm mt-1 ml-1">{errors.phone}</span>}
+                  <Input
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="Phone"
+                    type="tel"
+                  />
+                  {errors.phone && (
+                    <span className="text-red-500 text-sm mt-1 ml-1">
+                      {errors.phone}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-col">
-                  <Textarea name="message"  onChange={handleChange} placeholder="Message..." />
+                  <Textarea
+                    name="message"
+                    onChange={handleChange}
+                    placeholder="Message..."
+                  />
                 </div>
 
                 <div className="mt-4 flex flex-col gap-3">
-                  <button type="submit" className="cursor-pointer w-full bg-[#61A146] hover:bg-[#528d3a] text-white font-medium py-[14px] px-6 rounded-full transition-colors shadow-sm">
+                  <button
+                    type="submit"
+                    className="cursor-pointer w-full bg-[#61A146] hover:bg-[#528d3a] text-white font-medium py-[14px] px-6 rounded-full transition-colors shadow-sm"
+                  >
                     Send
                   </button>
-                  <button type="button" className="w-full bg-[#F4F5F0] border border-[#61A146] text-[#61A146] hover:bg-[#eff1ea] font-medium flex items-center justify-center gap-2 py-[14px] px-6 rounded-full transition-colors shadow-sm">
+                  <button
+                    type="button"
+                    className="w-full bg-[#F4F5F0] border border-[#61A146] text-[#61A146] hover:bg-[#eff1ea] font-medium flex items-center justify-center gap-2 py-[14px] px-6 rounded-full transition-colors shadow-sm"
+                  >
                     <WhatsappIcon />
                     Start a WhatsApp Chat
                   </button>
@@ -131,7 +189,6 @@ const ContactForm = () => {
               </form>
             </div>
           </div>
-
         </div>
       </div>
     </section>
