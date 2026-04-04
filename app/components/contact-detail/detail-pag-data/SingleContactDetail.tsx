@@ -2,18 +2,41 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { singleDetail } from "@/app/utils/type";
+import Input from "../../common/Input";
+import Textarea from "../../common/Textarea";
+import { postFormDataUpdate } from "@/app/utils/api/apiList";
 
 const SingleContactDetail = ({
   detailsingle,
 }: {
   detailsingle: singleDetail;
 }) => {
+  // const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: detailsingle.name || "",
     email: detailsingle.email || "",
-    phoneNumber: detailsingle || "",
-    message: detailsingle || "",
+    phoneNumber: detailsingle.phoneNumber || "",
+    message: detailsingle.message || "",
   });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await postFormDataUpdate(
+        { data: { ...formData } },
+        detailsingle.documentId,
+      );
+      alert("Updated successfully!");
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
   return (
     <section className="bg-[#F4F5F0] py-16 min-h-[calc(100vh-100px)]">
       <div className="max-w-[800px] px-5 mx-auto">
@@ -28,48 +51,86 @@ const SingleContactDetail = ({
         </div>
 
         <div className="bg-white border border-[#61A146] rounded-2xl shadow-sm p-8 lg:p-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
             <div className="flex flex-col gap-1">
               <span className="text-sm font-semibold text-[#61A146] uppercase tracking-wider">
                 Name
               </span>
-              <span className="text-lg text-gray-800 font-medium capitalize">
+              {/* <span className="text-lg text-gray-800 font-medium capitalize">
                 {detailsingle.name}
-              </span>
+              </span> */}
+              <Input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder={detailsingle.name}
+              />
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-sm font-semibold text-[#61A146] uppercase tracking-wider">
                 Email
               </span>
-              <span className="text-lg text-gray-600">
+              {/* <span className="text-lg text-gray-600">
                 {detailsingle.email}
-              </span>
+              </span> */}
+              <Input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                type="email"
+              />
             </div>
             <div className="flex flex-col gap-1 md:col-span-2">
               <span className="text-sm font-semibold text-[#61A146] uppercase tracking-wider">
                 Phone Number
               </span>
-              <span className="text-lg text-gray-800 font-medium">
+              {/* <span className="text-lg text-gray-800 font-medium">
                 {detailsingle.phoneNumber}
-              </span>
+              </span> */}
+              <Input
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                placeholder="Phone"
+                type="tel"
+              />
             </div>
             <div className="flex flex-col gap-1 md:col-span-2">
               <span className="text-sm font-semibold text-[#61A146] uppercase tracking-wider">
                 Message
               </span>
-              <div className="bg-[#F4F5F0] p-4 md:p-6 rounded-xl mt-2 text-gray-700 whitespace-pre-wrap leading-relaxed shadow-inner border border-gray-100">
+              {/* <div className="bg-[#F4F5F0] p-4 md:p-6 rounded-xl mt-2 text-gray-700 whitespace-pre-wrap leading-relaxed shadow-inner border border-gray-100">
                 {detailsingle.message}
-              </div>
+              </div> */}
+              <Textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Message..."
+              />
             </div>
-          </div>
-
-          <div className="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
-            <button className="font-semibold text-sm leading-[160%] text-[#19AE1A] bg-transparent py-3 px-8 rounded-xl cursor-pointer hover:bg-[#19AE1A] hover:text-[#FAFAFA] border border-[#19AE1A] shadow-sm transition-all ease-linear duration-300">
-              Edit Details
-            </button>
-            <button className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-3 px-8 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] shadow-sm transition-all ease-linear duration-300">
+            <button
+              type="submit"
+              className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-3 px-8 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] shadow-sm transition-all ease-linear duration-300"
+            >
               Save
             </button>
+          </form>
+
+          <div className="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-4">
+            {/* <button className="font-semibold text-sm leading-[160%] text-[#19AE1A] bg-transparent py-3 px-8 rounded-xl cursor-pointer hover:bg-[#19AE1A] hover:text-[#FAFAFA] border border-[#19AE1A] shadow-sm transition-all ease-linear duration-300">
+              Edit Details
+            </button> */}
+            {/* <button
+              type="submit"
+              className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-3 px-8 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] shadow-sm transition-all ease-linear duration-300"
+            >
+              Save
+            </button> */}
           </div>
         </div>
       </div>
