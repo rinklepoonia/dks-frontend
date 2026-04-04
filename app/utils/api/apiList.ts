@@ -61,7 +61,7 @@ export const getContactFormData = async() => {
             
     })
 }
-export const postContactFormDataUpdate = async(data:any , id:string) => {
+export const postFormDataUpdate = async(data:any , id:string) => {
     return await handleApiRequest ({
             method:PUT_METHOD  ,
             url : API_URLS.CONTACT_fORM_DATA + `/${id}`,

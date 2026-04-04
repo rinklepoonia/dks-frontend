@@ -1,6 +1,9 @@
 import { getContactFormData, getContactStaticData } from "@/app/utils/api/apiList";
 import React from "react";
 import Button from "../common/Button";
+import Link from "next/link";
+import { slugify } from "@/app/utils/commonFun";
+import { singleDetail } from "@/app/utils/type";
 
 // const mockContactData = [
 //   {
@@ -30,14 +33,14 @@ import Button from "../common/Button";
 // ];
 
  
-interface detailListProps{
-  id: number;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  message: string;
-  createdAt: string;
-}
+// interface detailListProps{
+//   id: number;
+//   name: string;
+//   email: string;
+//   phoneNumber: string;
+//   message: string;
+//   createdAt: string;
+// }
 const ContactInfoList = async() => {
     const formList =  await getContactFormData();
      const detailFormList = formList.data
@@ -83,7 +86,7 @@ const ContactInfoList = async() => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {detailFormList?.map((row:detailListProps) => (
+                {detailFormList?.map((row:singleDetail) => (
                   <tr
                     key={row.id}
                     className="hover:bg-[#F4F5F0]/50 transition-colors group"
@@ -102,7 +105,7 @@ const ContactInfoList = async() => {
                       {row.message}
                     </td>
                    <td className="py-4 px-6">
-                     <button className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-2 px-6 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] transition-all ease-linear duration-300">EDIT</button>
+                     <Link href={`/contact-detail/${slugify(row.documentId)}`} className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-2 px-6 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] transition-all ease-linear duration-300">EDIT</Link>
                    </td>
                   </tr>
                 ))}

@@ -23,3 +23,12 @@ export interface contactProps {
   }[],
   
 }
+export interface singleDetail {
+   id: number;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  message: string;
+  createdAt: string;
+documentId :string
+}
