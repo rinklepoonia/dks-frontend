@@ -37,8 +37,13 @@ export const getBlogs = async() => {
 export const getContactData = async() => {
     return await handleApiRequest ({
          method:GET_METHOD ,
-            // Strapi sorting by publish date in ascending order (oldest first)
-            // Adjust field name (publishedAt/createdAt) according to your CMS schema
             url : API_URLS.CONTACT_PAGE +'?populate=hourofOperation&populate=hourofOperation.infoList'
+    })
+}
+export const getContactFormData = async(data:any) => {
+    return await handleApiRequest ({
+         method:POST_METHOD ,
+            url : API_URLS.CONTACT_fORM_DATA ,
+            data
     })
 }

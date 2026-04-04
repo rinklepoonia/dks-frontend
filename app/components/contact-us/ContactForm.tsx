@@ -4,14 +4,24 @@ import Input from "../common/Input";
 import Textarea from "../common/Textarea";
 import Link from "next/link";
 import { contactProps } from "@/app/utils/type";
+import { getContactFormData } from "@/app/utils/api/apiList";
 
 const ContactForm = ({
   contactHourDetail,
 }: {
   contactHourDetail: contactProps;
 }) => {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-  const [errors, setErrors] = useState({ name: "", email: "", phone: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+  });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -24,10 +34,10 @@ const ContactForm = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
-    const newErrors = { name: "", email: "", phone: "" };
+    const newErrors = { name: "", email: "", phoneNumber: "" };
 
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
@@ -40,18 +50,23 @@ const ContactForm = ({
       newErrors.email = "Email is Invalid";
       valid = false;
     }
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone is required";
+    if (!formData.phoneNumber.trim()) {
+      newErrors.phoneNumber = "Phone is required";
       valid = false;
     }
 
     setErrors(newErrors);
+    if (!valid) return;
 
-    if (valid) {
-      console.log("Form submitted successfully:", formData);
+    try {
+      await getContactFormData({ data: formData });
       alert("Form submitted successfully!");
-      setFormData({ name: "", email: "", phone: "" });
-    }
+      setFormData({ name: "", email: "", phoneNumber: "", message: "" });
+    } catch (error) {
+      alert("Something went wrong!");
+    } 
+
+    console.log("Form Data:", formData);
   };
 
   return (
@@ -72,39 +87,43 @@ const ContactForm = ({
               ></iframe>
             </div>
             <h2 className="text-3xl font-bold text-[#61A146] mb-6">
-             {contactHourDetail.title}
+              {contactHourDetail.title}
             </h2>
 
             <div className="flex max-sm:flex-wrap gap-4 justify-between">
               <div className="space-y-6  gap-6">
-                {contactHourDetail?.infoList?.slice(0, 3).map((obj, i:number) => (
-                  <div key={i}>
-                    <h3 className="text-lg font-medium text-gray-800">
-                      {obj.title}
-                    </h3>
-                    <p className="text-gray-500 mt-1 max-w-[244px]">
-                      {obj.value}
-                    </p>
-                  </div>
-                ))}
+                {contactHourDetail?.infoList
+                  ?.slice(0, 3)
+                  .map((obj, i: number) => (
+                    <div key={i}>
+                      <h3 className="text-lg font-medium text-gray-800">
+                        {obj.title}
+                      </h3>
+                      <p className="text-gray-500 mt-1 max-w-[244px]">
+                        {obj.value}
+                      </p>
+                    </div>
+                  ))}
               </div>
               <div className="space-y-6  gap-6">
-                {contactHourDetail?.infoList?.slice(3, 5).map((obj, i:number) => (
-                  <div key={i} className="max-w-[244px]">
-                    <h3 className="text-lg font-medium text-gray-800">
-                      {obj.title}
-                    </h3>
-                    {obj.url && (
-                      <Link
-                        target="_blank"
-                        href={obj.url}
-                        className="text-gray-500 mt-1 max-w-[244px]"
-                      >
-                        {obj.value}
-                      </Link>
-                    )}
-                  </div>
-                ))}
+                {contactHourDetail?.infoList
+                  ?.slice(3, 5)
+                  .map((obj, i: number) => (
+                    <div key={i} className="max-w-[244px]">
+                      <h3 className="text-lg font-medium text-gray-800">
+                        {obj.title}
+                      </h3>
+                      {obj.url && (
+                        <Link
+                          target="_blank"
+                          href={obj.url}
+                          className="text-gray-500 mt-1 max-w-[244px]"
+                        >
+                          {obj.value}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -151,24 +170,20 @@ const ContactForm = ({
                 </div>
                 <div className="flex flex-col">
                   <Input
-                    name="phone"
-                    value={formData.phone}
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
                     onChange={handleChange}
                     placeholder="Phone"
                     type="tel"
                   />
-                  {errors.phone && (
+                  {errors.phoneNumber && (
                     <span className="text-red-500 text-sm mt-1 ml-1">
-                      {errors.phone}
+                      {errors.phoneNumber}
                     </span>
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <Textarea
-                    name="message"
-                    onChange={handleChange}
-                    placeholder="Message..."
-                  />
+                  <Textarea name="message" placeholder="Message..." />
                 </div>
 
                 <div className="mt-4 flex flex-col gap-3">
@@ -178,16 +193,15 @@ const ContactForm = ({
                   >
                     Send
                   </button>
-                
                 </div>
               </form>
-                <button
-                    type="button"
-                    className="cursor-pointer w-full mt-3 bg-[#F4F5F0] border border-[#61A146] text-[#61A146] hover:bg-[#eff1ea] font-medium flex items-center justify-center gap-2 py-[14px] px-6 rounded-full transition-colors shadow-sm"
-                  >
-                    <WhatsappIcon />
-                    Start a WhatsApp Chat
-                  </button>
+              <button
+                type="button"
+                className="cursor-pointer w-full mt-3 bg-[#F4F5F0] border border-[#61A146] text-[#61A146] hover:bg-[#eff1ea] font-medium flex items-center justify-center gap-2 py-[14px] px-6 rounded-full transition-colors shadow-sm"
+              >
+                <WhatsappIcon />
+                Start a WhatsApp Chat
+              </button>
             </div>
           </div>
         </div>
