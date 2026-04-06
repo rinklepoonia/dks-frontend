@@ -58,7 +58,7 @@ const Navigation =  ({navbarDetails}:{navbarDetails:NavLink}) => {
           </ul>
             <button onClick={() => setNavOpen(!navOpen)} className="md:hidden block z-[100] cursor-pointer"> {navOpen ? <Icons icon="closeNav" /> : <Icons icon="openNav"/>}</button>
                  <Button className="md:block hidden">{navbarDetails?.header?.navCta?.title}</Button>
-       
+       <p>anoop</p>
       </div>
     </div>
   );
