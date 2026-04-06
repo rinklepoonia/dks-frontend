@@ -5,6 +5,7 @@ import Textarea from "../common/Textarea";
 import Link from "next/link";
 import { contactProps } from "@/app/utils/type";
 import { postContactFormData } from "@/app/utils/api/apiList";
+import { toast } from "react-toastify";
 
 const ContactForm = ({
   contactHourDetail,
@@ -60,10 +61,10 @@ const ContactForm = ({
 
     try {
       await postContactFormData({ data: formData });
-      alert("Form submitted successfully!");
+      toast.success("Form submitted successfully!");
       setFormData({ name: "", email: "", phoneNumber: "", message: "" });
     } catch (error) {
-      alert("Something went wrong!");
+      toast.error("Something went wrong!");
     }
 
     console.log("Form Data:", formData);
@@ -183,7 +184,8 @@ const ContactForm = ({
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <Textarea name="message" placeholder="Message..." />
+                  <Textarea value={formData.message}
+                    onChange={handleChange} name="message" placeholder="Message..." />
                 </div>
 
                 <div className="mt-4 flex flex-col gap-3">

@@ -4,14 +4,16 @@ import Link from "next/link";
 import { singleDetail } from "@/app/utils/type";
 import Input from "../../common/Input";
 import Textarea from "../../common/Textarea";
-import { postFormDataUpdate } from "@/app/utils/api/apiList";
+import { deleteFormData, postFormDataUpdate } from "@/app/utils/api/apiList";
 import { toast } from 'react-toastify';
+import { useRouter } from "next/navigation";
+
 const SingleContactDetail = ({
   detailsingle,
 }: {
   detailsingle: singleDetail;
 }) => {
-  //  const notify = () => toast("Wow so easy!");
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: detailsingle.name || "",
@@ -40,6 +42,18 @@ const SingleContactDetail = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+   const handelDelete = async (id:string) => {
+       const confirmDelete = confirm("Are you sure to delete entry")
+         if (!confirmDelete) return;
+       try {
+         await deleteFormData(id)
+         toast.success("Entery delete succussfully")
+         router.push("/contact-detail")
+       } catch (error) {
+        toast.error("error")
+       }
   };
   return (
     <section className="bg-[#F4F5F0] py-16 min-h-[calc(100vh-100px)]">
@@ -143,6 +157,12 @@ const SingleContactDetail = ({
             >
               Save
             </button> */}
+             <button type="button"
+             onClick = {() => handelDelete(detailsingle.documentId)}
+                        className="font-semibold text-sm leading-[160%] text-[#FAFAFA] bg-[#19AE1A] py-2 px-6 rounded-xl cursor-pointer hover:bg-transparent hover:text-[#19AE1A] border border-transparent hover:border-[#19AE1A] transition-all ease-linear duration-300"
+                      >
+                        DELETE
+                      </button>
           </div>
         </div>
       </div>

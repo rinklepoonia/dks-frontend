@@ -31,4 +31,5 @@ export interface singleDetail {
   message: string;
   createdAt: string;
 documentId :string
+
 }
